@@ -60,3 +60,63 @@ function testLevenshteinDistance(s, t) {
   let res = levenshteinDistance(s, t);
   console.log(res);
 }
+
+
+/**
+ * A variation
+ *
+ * You have add/delete/move at your disposal, minimize the number
+ * of operations it takes to change A into B
+ */
+
+function changeAtoBDP(A, B) {
+    let steps = changeAtoBHelper(A, B, 0, 0)
+    return steps;
+}
+
+function changeAtoBHelper(A, B, idx_A, idx_B) {
+    // console.log(A, B, idx_A, idx_B);
+    // base case
+    if (idx_A >= A.length && idx_B >= B.length) {
+        // both run out of elements
+        return 0;
+    } else if (idx_A >= A.length) {
+        // we have extra elements in B
+        return B.length - idx_B;
+    } else if (idx_B >= B.length) {
+        // we have extra elements in A
+        return A.length - idx_A;
+    }
+
+    if (A[idx_A] === B[idx_B]) {
+        return changeAtoBHelper(A, B, idx_A + 1, idx_B + 1);
+    } else {
+        let doDelete = changeAtoBHelper(A, B, idx_A + 1, idx_B);
+        let doAdd = changeAtoBHelper(A, B, idx_A, idx_B + 1);
+
+        let extraOp = 0; // 1
+        for (let i = idx_B + 1; i < B.length; ++i) {
+            if (B[i] === A[idx_A]) {
+                console.log('we can move to', i)
+                // if we move here, we can potentially save 1 op
+                extraOp = -1; // 0
+                break;
+            }
+        }
+        let doMove = doDelete + extraOp;
+
+        // console.log('del', doDelete, 'add', doAdd, 'move', doMove)
+        return Math.min(doDelete, doAdd, doMove) + 1;
+    }
+}
+
+function testChangeAtoBDP(A, B) {
+  if (!A || !B) {
+    console.assert(changeAtoBDP([1, 2, 3], [2, 3]) === 1);
+    console.assert(changeAtoBDP([1, 2, 3], [3, 2]) === 2);
+    console.assert(changeAtoBDP([2, 3, 1], [3, 2]) === 2);
+    console.assert(changeAtoBDP([4, 2, 1, 3], [2,3,1,4]) === 2);
+  } else {
+    console.log(changeAtoBDP(A, B));
+  }
+}
