@@ -66,6 +66,8 @@ class DatingApp {
   }
 }
 
+console.log('Run: testDatingApp() to test')
+
 function testDatingApp () {
   let app = new DatingApp(
     [
@@ -85,5 +87,3 @@ function testDatingApp () {
   console.log(app.getInterests('b and c ', app.getCommonInterests(b, c))) // prints out the strings instead of number
   console.log(app.getInterests('c and d ', app.getCommonInterests(c, d))) // prints out the strings instead of number
 }
-
-testDatingApp();

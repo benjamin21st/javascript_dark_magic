@@ -40,6 +40,7 @@ function lookAndSay(n) {
 
 function lookAndSayImproved(n) {
   let res = '1';
+  l
   for (let i = 1; i < n; ++i) {
     res = nextNumber(res);
   }

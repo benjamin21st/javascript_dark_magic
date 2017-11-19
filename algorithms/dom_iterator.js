@@ -9,7 +9,7 @@ function compareNodes (node1, node2) {
 }
 
 /**
- * Time complexity: O(min(n1, n2)) * O(k) * O(logm + h)
+ * Time complexity: O(min(n1, n2) * O(k) * O(logm + h)
  *   Traversing all the nodes should be bounded by the root
  *   with fewer nodes (iterator stops when one of the node
  *   is null);
